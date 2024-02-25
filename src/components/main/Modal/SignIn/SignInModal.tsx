@@ -11,6 +11,19 @@ import {
   SubmitButton,
   ChangeModalButton,
 } from "../Modal.styles";
+import { Icon } from "@/components/common/Icon";
+import { NextAuthOptions } from "next-auth";
+import { signIn } from "next-auth/react";
+import GoogleProvider from "next-auth/providers/google";
+
+export const authConfig: NextAuthOptions = {
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
+  ],
+};
 
 const SignInModal = ({
   setType,
@@ -49,6 +62,13 @@ const SignInModal = ({
         <SubmitButton type="submit">Увійти</SubmitButton>
       </Form>
       <Description>Або увійдіть за допомогою:</Description>
+      <button
+        onClick={() => {
+          signIn("google");
+        }}
+      >
+        <Icon name="google" />
+      </button>
       <Description>
         Немає профілю?
         <ChangeModalButton
